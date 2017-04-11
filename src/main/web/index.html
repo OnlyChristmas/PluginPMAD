@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:>
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Anomaly Detection</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!--<script id="attribute-template" type="text/x-handlerbars-template">-->
+    <!--<table class="table table-hover " style="background-color: rgba(255,255,255,0.7)">-->
+    <!--<tr>-->
+    <!--<td class="active text-center">patient_id</td>-->
+    <!--<td class="success text-center">diagnose</td>-->
+    <!--<td class="warning text-center">remark</td>-->
+    <!--<td class="danger text-center">...</td>-->
+    <!--<td class="info text-center">...</td>-->
+    <!--{{#each this.@key}}-->
+    <!--<td>{{head}}</td>-->
+    <!--{{/each}}-->
+    <!--</tr>-->
+    <!--</table>-->
+    <!--</script>-->
+
+    <script id="select-template-one" type="text/x-handlerbars-template">
+        <select class="form-control" style="background-color: rgba(255,255,255,0.7)" name="formone">
+            {{#each this}}
+            <option>{{@key}}</option>
+            {{/each}}
+        </select>
+    </script>
+
+    <script id="select-template-two" type="text/x-handlerbars-template">
+        <select class="form-control" style="background-color: rgba(255,255,255,0.7)" name="formtwo">
+            {{#each this}}
+            <option>{{@key}}</option>
+            {{/each}}
+        </select>
+    </script>
+
+    <!--<script id="table-template" type="text/x-handlerbars-template">-->
+    <!--<table class="table table-hover " style="background-color: rgba(255,255,255,0.7)">-->
+    <!--<tr>-->
+    <!--{{#each this}}-->
+    <!--<td>{{@key}}</td>-->
+    <!--{{/each}}-->
+    <!--</tr>-->
+    <!--</table>-->
+    <!--</script>-->
+
+
+    <style type="text/css">
+        body {
+            background-image: url("static/index_01.jpg");
+            background-size: cover;
+        }
+    </style>
+
+    <style type="text/css">
+        p.pos_signin {
+            position: absolute;
+            left: 775px;
+            top: 0px;
+        }
+
+        p.pos_reset {
+            position: absolute;
+            left: 700px;
+            top: 0px;
+        }
+    </style>
+</head>
+
+
+<body>
+<div class="row">
+    <!--<div class="col-xs-6 col-xs-offset-3" style="padding-top: 90px">-->
+    <div class="form-group text-center text-muted bg-primary">
+        <h2><label>Medical Anomaly Detection</label></h2>
+    </div>
+    <!--</div>-->
+</div>
+<div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+
+        <!--information input panel-->
+        <div id="form-panel" class="panel panel-default " style="background-color: rgba(255,255,255,0.4)">
+            <div class="panel-body">
+                <form class="form-horizontal" id="sign" method="get" action="/handler">
+                    <div class="form-group form-group-xs">
+                        <label class="col-lg-2 control-label" for="mysqlUrl">Mysql URL：</label>
+
+                        <div class="col-sm-9">
+                            <input class="form-control" style="background-color: rgba(255,255,255,0.7)" name="mysqlUrl"
+                                   type="url" class="form-control" id="mysqlUrl"
+                                   placeholder="jdbc:mysql://192.168.4.181……">
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-xs">
+                        <label class="col-sm-2 control-label" for="Username">Username：</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" style="background-color: rgba(255,255,255,0.7)" name="Username"
+                                   type="text" class="form-control" id="Username"
+                                   placeholder="root">
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-xs">
+                        <label class="col-sm-2 control-label" for="Password">Password：</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" style="background-color: rgba(255,255,255,0.7)" name="Password"
+                                   type="password" class="form-control" id="Password"
+                                   placeholder="woxnsk">
+                        </div>
+                    </div>
+
+                    <div class=" col-md-16 col-lg-offset-7">
+                        <input style="background-color: rgba(255,255,255,0.7)" type="checkbox" id="remember-me">
+                        <label for="remember-me">Remember me</label>
+
+                        <button style="background-color: rgba(255,255,255,0.7)" type="reset" class="btn btn-sm">
+                            Reset
+                        </button>
+
+                        <button style="background-color: rgba(255,255,255,0.7)" type="submit" id="sign-in"
+                                class="btn btn-sm">
+                            Sign in
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--The form attribute selection-->
+
+        <div id="task-table" class="panel panel-default hide" style="background-color: rgba(255,255,255,0.4)">
+            <div class="panel-body">
+                <form class="form-horizontal" id="task-form" method="get" action="/task">
+
+                    <div class="form-group form-group-xs">
+                        <label class="col-lg-2 control-label" for="taskName">Model name：</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" style="background-color: rgba(255,255,255,0.7)" name="taskName"
+                                   type="text" id="taskName"
+                                   placeholder="task1">
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-xs">
+                        <label class="col-sm-2 control-label" for="taskDescription">Model descrip：</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" style="background-color: rgba(255,255,255,0.7)"
+                                      name="taskDescription" id="taskDescription"
+                                      placeholder="Diagnosis And Medication" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-xs">
+                        <label class="col-sm-2 control-label" for="form-one">Form One:</label>
+                        <div class="col-sm-9">
+                            <div id="form-one"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-xs">
+                    <label class="col-sm-2 control-label" for="form-two">Form Two:</label>
+                    <div class="col-sm-9">
+                        <div id="form-two"></div>
+                    </div>
+                </div>
+
+                    <!--<div class="form-group form-group-xs">-->
+                    <!--<div class="col-sm-10">-->
+                    <!--<div id="table-one">swd</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+
+                    <!--<div class="form-group form-group-xs">-->
+
+                    <!--<table id="showattribute" class="table table-hover " name="showattribute">-->
+                    <!--<tr>-->
+                    <!--<td class="active text-center">patient_id</td>-->
+                    <!--&lt;!&ndash;<td class="success text-center">diagnose</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td class="warning text-center">remark</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td class="danger text-center">...</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td class="info text-center">...</td>&ndash;&gt;-->
+
+                    <!--</tr>-->
+                    <!--</table>-->
+                    <!--</div>-->
+
+                    <div class="form-group form-group-xs">
+                        <label class="col-sm-2 control-label" for="form-two">Anomaly Evaluation:</label>
+                        <div class="col-sm-9">
+                            <div id="anomaly-evaluation"></div>
+                        </div>
+                    </div>
+
+
+
+                    <div class=" ">
+                        <button style="background-color: rgba(255,255,255,0.7)" type="reset"
+                                class="btn btn-sm col-md-offset-8  col-sm-1">
+                            Reset
+                        </button>
+
+                        <button style="background-color: rgba(255,255,255,0.7)" type="submit" id="submit"
+                                class="btn btn-sm  col-md-offset-1 col-sm-1">Submit
+                        </button>
+
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src=" https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script src="http://cdn.bootcss.com/materialize/0.98.1/js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <script>
+        (function ($) {
+            var compiled = {};
+            $.fn.handlebars = function (template, data) {
+                if (template instanceof jQuery) {
+                    template = $(template).html();
+                }
+                compiled[template] = Handlebars.compile(template);
+                this.html(compiled[template](data));
+            };
+        })(jQuery);
+
+        // 使用 jQuery 异步提交表单
+
+        $(document).ready(function () {
+            var sign_options = {
+                dataType: "json",
+                success: function (data) {
+//                    alert(data);
+                    $("#form-panel").addClass("hide");
+                    $("#task-table").removeClass("hide");
+                    $("#form-one").handlebars($("#select-template-one"), data);
+                    $("#form-two").handlebars($("#select-template-two"), data);
+
+//                    $("#table-one").handlebars($("#table-template"), data);
+                }
+            };
+            $("#sign").ajaxForm(sign_options);
+
+
+            var result_options = {
+                dataType: "json",
+                success: function (data) {
+                    $("#anomaly-evaluation").handlebars($("#select-template-one"), data);
+
+                }
+            };
+            $("#task-form").ajaxForm(result_options);
+
+
+        });
+
+
+    </script>
+</div>
+</body>
+</html>

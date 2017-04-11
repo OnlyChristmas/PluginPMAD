@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Plugin-Dependencies: 
+Implementation-Title: sample-plugin
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: 唐爽
+Implementation-Vendor-Id: cn.edu.pku.sei.tsr
+Plugin-Version: 0.0.1
+Implementation-Vendor: Pivotal Software, Inc.
+Plugin-Id: sample-plugin
+Plugin-Provider: Shawn Tang
+Plugin-Class: cn.edu.pku.sei.tsr.sample.SamplePlugin
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_66
+Implementation-URL: http://projects.spring.io/spring-boot/dbinsight-se
+ rver/dbinsight-extension-parent/sample-plugin/
+

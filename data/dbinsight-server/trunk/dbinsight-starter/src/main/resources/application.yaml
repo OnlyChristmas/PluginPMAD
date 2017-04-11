@@ -1,0 +1,60 @@
+spring:
+  profiles:
+    active: tsr-lab
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+#  jackson:
+#    property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
+
+dbinsight:
+  persistence:
+    type: elasticsearch
+
+
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/dbinsight
+    username: root
+    password: 1300012924
+  data:
+    elasticsearch:
+      cluster-nodes: localhost:9300
+
+---
+spring:
+  profiles: xykj
+  datasource:
+    url: jdbc:mysql://enjoyreading01:3306/insight?useSSL=false
+    username: root
+    password: xykj
+  data:
+    elasticsearch:
+      cluster-nodes: 192.168.1.173:9300
+
+---
+spring:
+  profiles: aliyun
+  datasource:
+    url: jdbc:mysql://120.27.44.159:3306/dbinsight
+    username: icing
+    password: 12924
+  data:
+    elasticsearch:
+      cluster-nodes: 101.201.112.103:9300
+
+
+---
+spring:
+  profiles: tsr-lab
+  datasource:
+    url: jdbc:mysql://192.168.4.157:3306/dbinsight
+    username: root
+    password: woxnsk
+  data:
+    elasticsearch:
+      cluster-nodes: 192.168.2.174:9300
