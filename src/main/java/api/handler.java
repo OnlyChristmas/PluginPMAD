@@ -2,7 +2,6 @@ package api;
 
 import core.PMAD;
 import data.PMADDCImporter;
-import data.PMADSort;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -13,9 +12,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.*;
-
-import static data.PMADDCImporter.Mids;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xuany on 2017.4.7.
@@ -53,9 +52,6 @@ public class handler extends HttpServlet {
         resp.setStatus(HttpServletResponse.SC_OK);
 
 
-
-
-
         File file = new File(".\\data" + "PMADcorpus-" + corpName + "M");
         if (!file.exists()) {
             try {
@@ -69,16 +65,17 @@ public class handler extends HttpServlet {
         }
 
 
-
         String fa = ".\\data" + "PMADcorpus-" + corpName + "M";
         String fb = ".\\data" + "PMADcorpus-" + corpName + "D";
         PMAD pmad = new PMAD(topicNum);
         try {
-            List<Double> anomalyScores = pmad.getAbScore(fa, fb, PMAD.NUM_ITER, SimiMethod);
-            System.out.println(Mids.size());
-            Map<Double, String> result = new TreeMap<>();
-            result = PMADSort.PMADSort(anomalyScores, Mids);
-            System.out.println(result);
+            Map<String,Double> result = pmad.getAbInfor(fa, fb, PMAD.NUM_ITER, SimiMethod);
+
+//            List<Double> anomalyScores = pmad.getAbScore(fa, fb, PMAD.NUM_ITER, SimiMethod);
+//            System.out.println(Mids.size());
+//            result = PMADSort.PMADSort(anomalyScores, Mids);
+
+
             JSONObject obj = new JSONObject(result);
             System.out.println(obj.toString());
             resp.getWriter().println(obj.toString());
@@ -88,7 +85,6 @@ public class handler extends HttpServlet {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
 
 
     }

@@ -84,15 +84,16 @@ public class PMADdbConnect extends HttpServlet {
 
         if (pmad.model == null) {
             try {
-                System.out.println("新训练模型，时间较长");
+                System.out.println("训练新模型，时间较长");
                 pmad.readTrainingData(FA_TRAIN, FB_TRAIN);
+                tokensinfor = pmad.train(iteration);
+                System.out.println(tokensinfor[0]);
+                System.out.println(tokensinfor[1]);
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            tokensinfor = pmad.train(iteration);
-            System.out.println(tokensinfor[0]);
-            System.out.println(tokensinfor[1]);
+
         } else {
             System.out.println("读取已有模型");
             System.out.println(tokensinfor[0]);

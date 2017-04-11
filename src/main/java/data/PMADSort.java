@@ -11,7 +11,7 @@ public class PMADSort {
 
     public static Map<Double, String> PMADSort(List<Double> abscore, List<String> testid) {
         Map<Double, String> Result = new TreeMap<>();
-        for (int num = 0; num < testid.size(); num++) {
+        for (int num = 0; num < abscore.size(); num++) {
             Result.put(abscore.get(num), testid.get(num));
         }
         return Result;

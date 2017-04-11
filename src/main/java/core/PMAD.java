@@ -12,8 +12,7 @@ import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 
 import java.io.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by xuany on 2017.3.13.
@@ -86,10 +85,12 @@ public class PMAD {
 
     }
 
+    //PMAD function
     public List<Double> getAbScore(String faTest, String fbTest, int numIter, String Method) throws FileNotFoundException {
         List<Double> rs = new ArrayList<>();
         InstanceList insesAtest = PMADDCImporter.readInstances(faTest);
         InstanceList insesBtest = PMADDCImporter.readInstances(fbTest);
+
         TopicInferencer infA = model.getInferencer(0);
         TopicInferencer infB = model.getInferencer(1);
         for (int i = 0; i < insesAtest.size(); i++) {
@@ -100,6 +101,35 @@ public class PMAD {
         }
         return rs;
     }
+
+
+    //web function
+    public Map<String, Double> getAbInfor(String faTest, String fbTest, int numIter, String Method) throws FileNotFoundException {
+        List<Double> rs = new ArrayList<>();
+        Map<String, Double> Result = new TreeMap<>();
+
+
+        InstanceList insesAtest = PMADDCImporter.readInstances(faTest);
+        InstanceList insesBtest = PMADDCImporter.readInstances(fbTest);
+
+
+        int len = insesAtest.size();
+        TopicInferencer infA = model.getInferencer(0);
+        TopicInferencer infB = model.getInferencer(1);
+        for (int i = 0; i < len; i++) {
+            double[] distA = infA.getSampledDistribution(insesAtest.get(i), numIter, 10, 200);
+            double[] distB = infB.getSampledDistribution(insesBtest.get(i), numIter, 10, 200);
+            double as = this.getAbScore(distA, distB, Method);
+            rs.add(as);
+            Result.put((String) insesAtest.get(i).getName(), as);
+        }
+        System.out.println(Result);
+
+        return Result;
+    }
+
+
+
 
     private double getAbScore(double[] distA, double[] distB, String method) {
 
@@ -311,7 +341,7 @@ public class PMAD {
 //        }
 
         train[0] = PMADDCImporter.readInstances(fa);
-        //PMADDCImporter.ClearFile(fb);
+
         train[1] = PMADDCImporter.readInstances(fb);
 
 
