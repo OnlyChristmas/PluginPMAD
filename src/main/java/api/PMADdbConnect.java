@@ -1,5 +1,6 @@
 package api;
 
+import cc.mallet.topics.PolylingualTopicModelMultiReadouts;
 import core.PMAD;
 import data.PMADDCImporter;
 import org.json.JSONObject;
@@ -8,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -57,13 +59,13 @@ public class PMADdbConnect extends HttpServlet {
             });
             //System.out.println(res.size());
             //success(res);
-            System.out.println("目标数据库连接成功");
+
             JSONObject obj = new JSONObject(res);
 
             System.out.println(obj.toString());
 
             resp.getWriter().println(obj.toString());
-
+            System.out.println("目标数据库连接成功");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,12 +74,12 @@ public class PMADdbConnect extends HttpServlet {
 
         int[] tokensinfor = null;
         PMAD pmad = new PMAD(topicNum);
-//        try {
-//            File f = new File(".\\datamodel");
-//            pmad.model = PolylingualTopicModelMultiReadouts.read(f);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            File f = new File(".\\datamodel");
+            pmad.model = PolylingualTopicModelMultiReadouts.read(f);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         if (pmad.model == null) {

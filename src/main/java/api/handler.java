@@ -56,7 +56,6 @@ public class handler extends HttpServlet {
 
 
 
-
         File file = new File(".\\data" + "PMADcorpus-" + corpName + "M");
         if (!file.exists()) {
             try {
