@@ -78,6 +78,7 @@ public class handler extends HttpServlet {
 
             JSONObject obj = new JSONObject(result);
             System.out.println(obj.toString());
+
             resp.getWriter().println(obj.toString());
 
 

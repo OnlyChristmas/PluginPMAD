@@ -125,6 +125,8 @@ public class PMAD {
         }
         System.out.println(Result);
 
+
+
         return Result;
     }
 
@@ -304,7 +306,7 @@ public class PMAD {
         tokens[1] = model.totalTokens;
 
 
-//        model.write(new File(".\\data" + "model"));
+        model.write(new File(".\\data" + "model"));
 
         System.out.println("模型已保存");
         return tokens;
